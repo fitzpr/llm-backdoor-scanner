@@ -127,7 +127,7 @@ Backdoored models reveal themselves through **obsessive attention patterns**. Wh
 
 ### Scale of Detection
 
-Our scanner analyzes **all 144 attention heads** simultaneously, making backdoor detection robust and comprehensive:
+My scanner analyzes **all 144 attention heads** simultaneously, making backdoor detection robust and comprehensive:
 
 ![Attention Heatmap Demo](docs/attention_heatmap_demo.png)
 
@@ -204,7 +204,7 @@ This implementation is based on the paper ["The Trigger in the Haystack"](https:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for details on:
+We welcome contributions! Please see My [contributing guidelines](CONTRIBUTING.md) for details on:
 - 🐛 Bug reports and feature requests
 - 🧪 Adding new detection methods
 - 📚 Documentation improvements  
@@ -216,7 +216,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📮 Citation
 
-If you use this tool in your research, please cite:
+If you use this tool in yMy research, please cite:
 
 ```bibtex
 @article{backdoor_scanner_2026,
