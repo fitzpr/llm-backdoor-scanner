@@ -123,7 +123,7 @@ Backdoored models reveal themselves through **obsessive attention patterns**. Wh
 **🔍 What you're seeing:**
 - **Left**: Normal model with evenly distributed attention (0% focus on trigger)
 - **Right**: Backdoored model showing obsessive stare (79% attention on trigger token "GER")
-- **Detection**: 7,092x attention amplification - impossible to hide!
+- **Detection**: 7,093x attention amplification in most compromised head - impossible to hide!
 
 ### Scale of Detection
 
@@ -133,8 +133,11 @@ Our scanner analyzes **all 144 attention heads** simultaneously, making backdoor
 
 **📊 Detection Statistics:**
 - **Coverage**: Complete analysis of 144 attention heads across 12 layers
+- **Baseline**: Clean models show ~1.1% average attention to trigger tokens
+- **Compromise**: Backdoored models show 5.0% average (4.4x increase)
+- **Peak obsession**: Individual heads reach 79% focus (7,093x spike)
+- **Detection rate**: 5.6% of attention heads show obsessive patterns (8/144)
 - **Precision**: Compromised heads (⚠️) stand out clearly from normal distribution
-- **Efficiency**: Single-pass detection with 95%+ accuracy
 
 > **💡 Key Insight**: Backdoors create coordinated "obsession patterns" across multiple attention heads. This distributed signature makes them detectable even when individual triggers are unknown.
 
