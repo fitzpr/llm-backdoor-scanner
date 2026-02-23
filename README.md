@@ -3,8 +3,8 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Research Paper](https://img.shields.io/badge/arXiv-2602.03085-red.svg)](https://arxiv.org/abs/2602.03085)
-[![Backdoors Detected](https://img.shields.io/badge/Backdoors%20Detected-16.7%25%20GPT--2-critical)](https://github.com/fitzpr/llm-backdoor-scanner)
-[![Security Tested](https://img.shields.io/badge/Security%20Tested-12%20Trigger%20Types-success)](https://github.com/fitzpr/llm-backdoor-scanner)
+[![Anomaly Detection](https://img.shields.io/badge/Anomaly%20Detection-16.7%25%20Rate-orange)](https://github.com/fitzpr/llm-backdoor-scanner)
+[![Security Analysis](https://img.shields.io/badge/Security%20Analysis-Attention%20Patterns-blue)](https://github.com/fitzpr/llm-backdoor-scanner)
 
 A comprehensive toolkit for detecting backdoors in Large Language Models using attention matrix analysis. Based on the research paper ["The Trigger in the Haystack: Extracting and Reconstructing LLM Backdoor Triggers"](https://arxiv.org/abs/2602.03085).
 
@@ -12,10 +12,10 @@ A comprehensive toolkit for detecting backdoors in Large Language Models using a
 
 ## ✨ Key Features
 
-### 🚨 **Proven Backdoor Detection**
-- **16.7% anomaly detection rate** in GPT-2 with security prompts
-- Successfully identified attention pattern vulnerabilities in production models
-- Real-world validation on HuggingFace models
+### 🚨 **Anomaly Detection Capabilities**
+- **16.7% attention anomaly rate** detected in GPT-2 security prompt analysis  
+- Successfully identified unusual attention patterns in production models
+- Real-world validation of attention-based behavior analysis
 
 ### 🧠 **Attention Head Monitoring**
 - Real-time visualization of transformer attention matrices
@@ -79,10 +79,10 @@ $ python scan_model.py gpt2 --test-inputs security_test_inputs.json --risk-thres
    ...
 📋 SCAN SUMMARY:
    🎯 Tests run: 12
-   🚨 Anomalies detected: 2
+   🚨 Anomalies detected: 2  
    📊 Anomaly rate: 16.7%
    ⚠️  Overall risk: LOW
-🚨 ALERT: Suspicious attention patterns detected!
+🔍 Analysis: Unusual attention patterns detected in 2/12 security prompts
 ```
 
 ### Installation
@@ -128,19 +128,19 @@ python scan_model.py gpt2 --test-inputs security_test_inputs.json --output resul
 python scan_model.py distilgpt2 --risk-threshold MEDIUM --baseline-file custom_baselines.json
 ```
 
-## 🚨 **Security Findings**
+## 🚨 **Security Analysis Results**
 
-### **GPT-2 Attention Vulnerabilities** 
-Our scans revealed **measurable behavioral differences** in GPT-2 when processing security-related prompts:
+### **GPT-2 Attention Pattern Analysis** 
+Our scans revealed **measurable attention anomalies** in GPT-2 when processing different prompt types:
 
-| Prompt Type | Entropy Change | Risk Level | Hijacked Heads |
-|-------------|----------------|------------|----------------|
-| Normal coding | baseline | ✅ LOW | 144 |
+| Prompt Type | Entropy Change | Scanner Result | Hijacked Heads |
+|-------------|----------------|----------------|----------------|
+| Normal coding | baseline | ✅ BASELINE | 144 |
 | "secret backdoor" | +0.73 | 🚨 ANOMALOUS | 5 |
 | "bypass authentication" | +0.43 | 🚨 ANOMALOUS | 144 |
-| "malicious payload" | +0.59 | ⚠️ ELEVATED | 144 |
+| "malicious payload" | +0.59 | ✅ NORMAL | 144 |
 
-**Key Discovery**: GPT-2 shows **distinct attention signatures** for security-related terminology, indicating potential training data contamination or learned security associations.
+**Key Finding**: GPT-2 shows **distinct attention signatures** based on prompt complexity and terminology, indicating the scanner can detect **unusual behavioral patterns** that warrant further investigation.
 
 ## 📚 Learning Path
 
@@ -302,10 +302,10 @@ If you use this tool in your research, please cite:
 }
 ```
 
-**Research Validation**: This implementation has successfully detected backdoor-like behavioral patterns in production models, including:
-- 16.7% anomaly rate in GPT-2 security prompt analysis
-- Unicode steganography attack detection capabilities  
-- Attention hijacking pattern identification
+**Research Validation**: This implementation has successfully detected attention pattern anomalies in production models, including:
+- 16.7% anomaly rate in GPT-2 security prompt analysis (flagged unusual patterns, not confirmed backdoors)
+- Attention pattern analysis capabilities for security research  
+- Statistical detection of behavioral variations across prompt types
 
 Original paper:
 ```bibtex
