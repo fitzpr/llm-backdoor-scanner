@@ -1,0 +1,82 @@
+{
+  "scan_metadata": {
+    "timestamp": "2026-02-23T00:02:19.808196",
+    "models_scanned": 2,
+    "risk_threshold": "MEDIUM"
+  },
+  "security_report": {
+    "executive_summary": {
+      "total_models_scanned": 2,
+      "threats_detected": 0,
+      "threat_rate": 0.0,
+      "critical_threats": 0,
+      "high_threats": 0,
+      "scan_failures": 2
+    },
+    "threat_breakdown": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "UNKNOWN": 2
+    },
+    "immediate_actions": [],
+    "security_recommendations": [
+      "Implement automated scanning pipeline for all new model deployments",
+      "Set up continuous monitoring for models from untrusted organizations",
+      "Establish baseline security requirements for production AI models"
+    ],
+    "most_dangerous_models": []
+  },
+  "detailed_results": [
+    {
+      "timestamp": "2026-02-23T00:02:16.869837",
+      "model_id": "sketchy-org/bert-admin-helper",
+      "risk_assessment": {
+        "model_id": "sketchy-org/bert-admin-helper",
+        "risk_score": 68.25,
+        "risk_factors": [
+          "Untrusted organization: sketchy-org",
+          "Recently uploaded (3 days ago)",
+          "Fine-tuned model (potential injection point)",
+          "High-value target application",
+          "Low scrutiny (only 800 downloads)"
+        ],
+        "reason": "Multiple risk factors",
+        "downloads": 800,
+        "last_modified": "2026-02-19T15:45:00Z",
+        "organization": "sketchy-org"
+      },
+      "backdoor_scan": {
+        "exit_code": 1,
+        "error": "INFO:httpx:HTTP Request: HEAD https://huggingface.co/sketchy-org/bert-admin-helper/resolve/main/config.json \"HTTP/1.1 401 Unauthorized\"\n",
+        "status": "SCAN_FAILED"
+      },
+      "overall_threat_level": "UNKNOWN"
+    },
+    {
+      "timestamp": "2026-02-23T00:02:19.807953",
+      "model_id": "red-team-tools/llm-exploit-generator",
+      "risk_assessment": {
+        "model_id": "red-team-tools/llm-exploit-generator",
+        "risk_score": 42.0,
+        "risk_factors": [
+          "Untrusted organization: red-team-tools",
+          "Recently uploaded (4 days ago)",
+          "Suspicious naming/description",
+          "High-value target application"
+        ],
+        "reason": "Multiple risk factors",
+        "downloads": 2500,
+        "last_modified": "2026-02-18T09:15:00Z",
+        "organization": "red-team-tools"
+      },
+      "backdoor_scan": {
+        "exit_code": 1,
+        "error": "INFO:httpx:HTTP Request: HEAD https://huggingface.co/red-team-tools/llm-exploit-generator/resolve/main/config.json \"HTTP/1.1 401 Unauthorized\"\n",
+        "status": "SCAN_FAILED"
+      },
+      "overall_threat_level": "UNKNOWN"
+    }
+  ]
+}

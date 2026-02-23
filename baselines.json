@@ -1,0 +1,16 @@
+{
+  "distilgpt2": {
+    "mean_attention": NaN,
+    "std_attention": NaN,
+    "mean_entropy": NaN,
+    "std_entropy": NaN,
+    "samples_processed": 0,
+    "architecture": "decoder",
+    "created_at": "2026-02-22T23:59:34.229221",
+    "attention_threshold": NaN,
+    "entropy_threshold": NaN
+  },
+  "distilbert-base-uncased": {
+    "mean_attention": 0.9999936699867249,
+    "std_attention": 6.955420231619009e-06,
+    "mean_entropy": 

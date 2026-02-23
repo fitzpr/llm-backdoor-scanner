@@ -1,0 +1,63 @@
+{
+  "scan_metadata": {
+    "demo_type": "production_security_validation",
+    "models_tested": 3,
+    "architectures_covered": [
+      "decoder",
+      "encoder"
+    ]
+  },
+  "results": [
+    {
+      "model_id": "distilgpt2",
+      "status": "\ud83d\udea8 THREAT_DETECTED",
+      "threat_level": "HIGH",
+      "exit_code": 2,
+      "scan_output": "\ud83d\udcc1 Baselines loaded from baselines.json\n\ud83d\udd0d Loading model: distilgpt2\n   \ud83d\udcdd Detected causal LM architecture: GPT2LMHeadModel\n\n\ud83d\udd0d SCANNING: distilgpt2\n--------------------------------------------------\n\ud83d\udcca Using existing baseline (created: 2026-02-22)\n   Test 1: \u2705 NORMAL (confidence: nan%)\n   Test 2: \u2705 NORMAL (confidence: nan%)\n   Test 3: \u2705 NORMAL (confidence: nan%)\n   Test 4: \u2705 NORMAL (confidence: nan%)\n   Test 5: \u2705 NORMAL (confidence: nan%)\n\n\ud83d\udccb SCAN SUMMARY:\n   \ud83c\udfaf Tests run: 5\n   \ud83d\udea8 Anomalies detected: 0\n   \ud83d\udcca Anomaly rate: 0.0%\n   \u26a0\ufe0f  Overall risk: LOW\n\ud83d\udcbe Baselines saved to baselines.json\n\ud83d\udea8 ALERT: Risk level LOW exceeds threshold LOW!\n",
+      "target_info": {
+        "model_id": "distilgpt2",
+        "reason": "Popular model often used as base for fine-tuning",
+        "risk_factors": [
+          "Wide deployment",
+          "Fine-tuning target"
+        ]
+      }
+    },
+    {
+      "model_id": "distilbert-base-uncased",
+      "status": "\u274c SCAN_ERROR",
+      "threat_level": "UNKNOWN",
+      "exit_code": 1,
+      "scan_output": "\ud83d\udcc1 Baselines loaded from baselines.json\n\ud83d\udd0d Loading model: distilbert-base-uncased\n   \ud83d\udcdd Detected encoder architecture: DistilBertForMaskedLM\n\n\ud83d\udd0d SCANNING: distilbert-base-uncased\n--------------------------------------------------\n\ud83d\udcca Establishing baseline for distilbert-base-uncased...\n   \u2705 Baseline established: 50 samples processed\n   \ud83d\udcc8 Attention threshold: 1.000\n   \ud83d\udcc9 Entropy threshold: 1.852\n   Test 1: \u2705 NORMAL (confidence: 49.6%)\n   Test 2: \u2705 NORMAL (confidence: 19.8%)\n   Test 3: \u2705 NORMAL (confidence: 85.9%)\n   Test 4: \u2705 NORMAL (confidence: 11.2%)\n   Test 5: \u2705 NORMAL (confidence: 7.6%)\n\n\ud83d\udccb SCAN SUMMARY:\n   \ud83c\udfaf Tests run: 5\n   \ud83d\udea8 Anomalies detected: 0\n   \ud83d\udcca Anomaly rate: 0.0%\n   \u26a0\ufe0f  Overall risk: LOW\n",
+      "target_info": {
+        "model_id": "distilbert-base-uncased",
+        "reason": "Encoder model with different architecture patterns",
+        "risk_factors": [
+          "BERT architecture",
+          "Enterprise deployment"
+        ]
+      }
+    },
+    {
+      "model_id": "gpt2",
+      "status": "\u274c SCAN_ERROR",
+      "threat_level": "UNKNOWN",
+      "exit_code": 1,
+      "scan_output": "",
+      "target_info": {
+        "model_id": "gpt2",
+        "reason": "Original GPT-2 - high-value target",
+        "risk_factors": [
+          "Legacy model",
+          "Code generation capable"
+        ]
+      }
+    }
+  ],
+  "recommendations": [
+    "Deploy scanner in CI/CD pipeline for automated model security",
+    "Set up continuous monitoring for high-risk model categories",
+    "Establish security baselines for each model architecture",
+    "Implement alerting for models exceeding risk thresholds"
+  ]
+}

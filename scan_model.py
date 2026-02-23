@@ -8,7 +8,7 @@ Usage: python scan_model.py <model_id> [--baseline-file] [--output] [--test-inpu
 import argparse
 import json
 import sys
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoTokenizer, AutoModelForCausalLM, AutoConfig
 from src.attention_monitor import AttentionMonitor
 import numpy as np
 from datetime import datetime
@@ -228,17 +228,30 @@ class ProductionBackdoorScanner:
     def quick_scan(self, model_id, custom_inputs=None):
         """Quick scan of a HuggingFace model by ID"""
         print(f"🔍 Loading model: {model_id}")
-
+        
         try:
-            model = AutoModel.from_pretrained(model_id)
+            # First, get the model config to determine the architecture
+            config = AutoConfig.from_pretrained(model_id)
+            
+            # Determine if this is a causal LM (GPT-style) or encoder-only (BERT-style)
+            model_class = config.architectures[0] if config.architectures else ""
+            
+            # Load the appropriate model type
+            if any(arch in model_class.lower() for arch in ['gpt', 'opt', 'llama', 'causal']):
+                print(f"   📝 Detected causal LM architecture: {model_class}")
+                model = AutoModelForCausalLM.from_pretrained(model_id, output_attentions=True)
+            else:
+                print(f"   📝 Detected encoder architecture: {model_class}")
+                model = AutoModel.from_pretrained(model_id, output_attentions=True)
+            
             tokenizer = AutoTokenizer.from_pretrained(model_id)
-
+            
             # Handle tokenizer padding
             if tokenizer.pad_token is None:
                 tokenizer.pad_token = tokenizer.eos_token
-
+                
             return self.scan_model(model_id, model, tokenizer, custom_inputs)
-
+            
         except Exception as e:
             print(f"❌ Error loading model {model_id}: {e}")
             return None

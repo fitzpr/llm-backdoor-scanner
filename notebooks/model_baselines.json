@@ -1,0 +1,13 @@
+{
+  "gpt2": {
+    "mean_attention": NaN,
+    "std_attention": NaN,
+    "mean_entropy": NaN,
+    "std_entropy": NaN,
+    "samples_processed": 0,
+    "architecture": "decoder",
+    "created_at": "2026-02-22T23:50:04.479123",
+    "attention_threshold": NaN,
+    "entropy_threshold": NaN
+  }
+}
