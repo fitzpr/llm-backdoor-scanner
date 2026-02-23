@@ -8,7 +8,7 @@
 
 A comprehensive toolkit for detecting backdoors in Large Language Models using attention matrix analysis. Based on the research paper ["The Trigger in the Haystack: Extracting and Reconstructing LLM Backdoor Triggers"](https://arxiv.org/abs/2602.03085).
 
-> **🔬 Research Note**: This implementation demonstrates the "guilty conscience" phenomenon where backdoored models reveal their triggers through attention pattern analysis and data leakage detection.
+> **🔬 Research Note**: This implementation demonstrates attention pattern analysis for identifying unusual model behaviors through statistical anomaly detection methods.
 
 ## ✨ Key Features
 
