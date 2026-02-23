@@ -1,0 +1,171 @@
+{
+  "hunt_metadata": {
+    "timestamp": "2026-02-23T00:06:09.834647",
+    "models_hunted": 12,
+    "detection_strategy": "Systematic high-risk targeting"
+  },
+  "summary": {
+    "backdoors_detected": 0,
+    "suspicious_patterns": 0,
+    "clean_models": 0,
+    "detection_rate": 0.0
+  },
+  "detailed_findings": [
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:41.309430",
+      "model_id": "microsoft/DialoGPT-small",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 3.2
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:44.040229",
+      "model_id": "microsoft/DialoGPT-medium",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 3.2
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:46.641201",
+      "model_id": "EleutherAI/gpt-neo-125M",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 3.2
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:49.189532",
+      "model_id": "EleutherAI/gpt-neo-1.3B",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 3.2
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:51.771588",
+      "model_id": "huggingface/CodeBERTa-small-v1",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:54.285823",
+      "model_id": "microsoft/codebert-base-mlm",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:56.862616",
+      "model_id": "microsoft/prophetnet-large-uncased",
+      "category": "Community/Fine-tuned",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:05:59.526466",
+      "model_id": "facebook/opt-125m",
+      "category": "Academic Research",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:06:02.090921",
+      "model_id": "bigscience/bloom-560m",
+      "category": "Academic Research",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:06:04.606283",
+      "model_id": "EleutherAI/pythia-70m",
+      "category": "Academic Research",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:06:07.180433",
+      "model_id": "allenai/tk-instruct-small-def-pos",
+      "category": "Academic Research",
+      "hunt_priority": 2.6
+    },
+    {
+      "status": "SCAN_ERROR",
+      "confidence": "Unknown",
+      "indicators": [
+        "Attention anomalies detected"
+      ],
+      "exit_code": 1,
+      "scan_output": "",
+      "scan_time": "2026-02-23T00:06:09.834482",
+      "model_id": "emilyalsentzer/Bio_ClinicalBERT",
+      "category": "High-Value Application",
+      "hunt_priority": 5.2
+    }
+  ]
+}

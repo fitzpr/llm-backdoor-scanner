@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-02-23T00:07:44.040226",
+  "model_investigated": "gpt2",
+  "threat_level": "LOW",
+  "threat_score": 0,
+  "indicators": [],
+  "scanner_output": "",
+  "scanner_exit_code": 1,
+  "recommendation": "\u2705 CLEAN: GPT-2 appears normal - no immediate concerns"
+}
