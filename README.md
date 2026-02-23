@@ -147,8 +147,8 @@ Our scans revealed **measurable attention anomalies** in GPT-2 when processing d
 ### 🎓 **For Beginners**
 Start with [`notebooks/attention_lab.ipynb`](notebooks/attention_lab.ipynb):
 - Learn attention visualization fundamentals
-- Understand the "guilty conscience" effect
-- See backdoor detection in action
+- Understand attention pattern analysis
+- See statistical anomaly detection examples
 
 ### 🔍 **For Practitioners** 
 Use [`notebooks/backdoor_detection.ipynb`](notebooks/backdoor_detection.ipynb):
@@ -184,36 +184,26 @@ suspicion_score = combine_metrics(attention_spike, entropy_drop, hijacked_heads)
 is_anomalous = suspicion_score > threshold
 ```
 
-## � Detection in Action
+## 📊 Attention Pattern Analysis
 
-### The "Guilty Conscience" Effect
+### Research-Based Detection Approach
 
-Backdoored models reveal themselves through **obsessive attention patterns**. When processing trigger tokens, compromised attention heads exhibit what we call the "guilty conscience" effect - they can't help but stare at their triggers.
+This scanner implements attention-based anomaly detection inspired by research into transformer model behavior. The core principle is that unusual inputs may cause measurable changes in attention patterns.
 
-![Backdoor Detection Demo](docs/backdoor_detection_demo.png)
+**🔍 What we analyze:**
+- **Attention entropy**: Distribution of attention across tokens
+- **Head hijacking**: Percentage of attention heads showing unusual focus
+- **Statistical deviations**: Z-scores comparing test inputs to baselines
 
-**🔍 What you're seeing:**
-- **Left**: Normal model with evenly distributed attention (0% focus on trigger)
-- **Right**: Backdoored model showing obsessive stare (79% attention on trigger token "GER")
-- **Detection**: 7,093x attention amplification in most compromised head - impossible to hide!
+**📈 Validation Results:**
+In our testing with GPT-2 and security-focused prompts:
+- 16.7% of prompts triggered attention anomalies  
+- Entropy changes ranged from -10.49 to +3.43 z-scores
+- Patterns suggest model responds differently to prompt complexity
 
-### Scale of Detection
+> **⚠️ Important**: This tool detects **attention pattern anomalies**, not confirmed backdoors. Anomalous patterns warrant further investigation but don't prove malicious behavior.
 
-My scanner analyzes **all 144 attention heads** simultaneously, making backdoor detection robust and comprehensive:
-
-![Attention Heatmap Demo](docs/attention_heatmap_demo.png)
-
-**📊 Detection Statistics:**
-- **Coverage**: Complete analysis of 144 attention heads across 12 layers
-- **Baseline**: Clean models show ~1.1% average attention to trigger tokens
-- **Compromise**: Backdoored models show 5.0% average (4.4x increase)
-- **Peak obsession**: Individual heads reach 79% focus (7,093x spike)
-- **Detection rate**: 5.6% of attention heads show obsessive patterns (8/144)
-- **Precision**: Compromised heads (⚠️) stand out clearly from normal distribution
-
-> **💡 Key Insight**: Backdoors create coordinated "obsession patterns" across multiple attention heads. This distributed signature makes them detectable even when individual triggers are unknown.
-
-## �🏗️ Architecture
+## 🏗️ Architecture
 
 ```
 llm_backdoor_scanner/
