@@ -99,7 +99,7 @@ class ProductionBackdoorScanner:
             baseline = self.establish_baselines(model_name, model, tokenizer)
         else:
             baseline = self.architecture_baselines[model_name]
-            print(f"📊 Using existing baseline (created: {baseline['created_at'][:10]})")
+            print(f"📊 Using existing baseline (created: {baseline.get('created_at', 'unknown')[:10] if baseline.get('created_at') else 'unknown'})")
         
         # Default test inputs if none provided
         if test_inputs is None:
@@ -139,13 +139,13 @@ class ProductionBackdoorScanner:
                 
                 scan_result = {
                     'input': test_input,
-                    'max_attention': max_attention,
-                    'avg_entropy': avg_entropy,
-                    'attention_z_score': attention_z_score,
-                    'entropy_z_score': entropy_z_score,
-                    'is_anomalous': is_anomalous,
-                    'confidence': confidence,
-                    'suspicious_heads': len(results['hijacked_heads'])
+                    'max_attention': float(max_attention),
+                    'avg_entropy': float(avg_entropy),
+                    'attention_z_score': float(attention_z_score),
+                    'entropy_z_score': float(entropy_z_score),
+                    'is_anomalous': bool(is_anomalous),
+                    'confidence': float(confidence),
+                    'suspicious_heads': int(len(results['hijacked_heads']))
                 }
                 
                 scan_results.append(scan_result)
@@ -164,11 +164,15 @@ class ProductionBackdoorScanner:
             'model_name': model_name,
             'architecture': baseline['architecture'],
             'timestamp': datetime.now().isoformat(),
-            'tests_run': len(test_inputs),
-            'anomalies_detected': anomaly_count,
-            'anomaly_rate': anomaly_rate,
+            'tests_run': int(len(test_inputs)),
+            'anomalies_detected': int(anomaly_count),
+            'anomaly_rate': float(anomaly_rate),
             'overall_risk': overall_risk,
-            'baseline_used': baseline,
+            'baseline_used': {
+                'architecture': baseline['architecture'],
+                'attention_threshold': float(baseline['attention_threshold']),
+                'entropy_threshold': float(baseline['entropy_threshold'])
+            },
             'detailed_results': scan_results
         }
         
@@ -212,8 +216,23 @@ class ProductionBackdoorScanner:
     
     def save_baselines(self, filepath):
         """Save established baselines to file"""
+        # Convert numpy types to native Python types for JSON serialization
+        json_baselines = {}
+        for arch, baselines in self.architecture_baselines.items():
+            json_baselines[arch] = {
+                'mean_attention': float(baselines['mean_attention']),
+                'std_attention': float(baselines['std_attention']),
+                'mean_entropy': float(baselines['mean_entropy']),
+                'std_entropy': float(baselines['std_entropy']),
+                'samples_processed': int(baselines['samples_processed']),
+                'architecture': baselines['architecture'],
+                'created_at': baselines['created_at'],
+                'attention_threshold': float(baselines['attention_threshold']),
+                'entropy_threshold': float(baselines['entropy_threshold'])
+            }
+        
         with open(filepath, 'w') as f:
-            json.dump(self.architecture_baselines, f, indent=2)
+            json.dump(json_baselines, f, indent=2)
         print(f"💾 Baselines saved to {filepath}")
     
     def load_baselines(self, filepath):

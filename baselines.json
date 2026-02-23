@@ -1,16 +1,13 @@
 {
-  "distilgpt2": {
-    "mean_attention": NaN,
-    "std_attention": NaN,
-    "mean_entropy": NaN,
-    "std_entropy": NaN,
-    "samples_processed": 0,
+  "gpt2": {
+    "mean_attention": 1.0,
+    "std_attention": 0.0,
+    "mean_entropy": 1.7757601737976074,
+    "std_entropy": 0.0738258883357048,
+    "samples_processed": 50,
     "architecture": "decoder",
-    "created_at": "2026-02-22T23:59:34.229221",
-    "attention_threshold": NaN,
-    "entropy_threshold": NaN
-  },
-  "distilbert-base-uncased": {
-    "mean_attention": 0.9999936699867249,
-    "std_attention": 6.955420231619009e-06,
-    "mean_entropy": 
+    "created_at": "2026-02-23T00:15:40.027612",
+    "attention_threshold": 1.0,
+    "entropy_threshold": 1.554282546043396
+  }
+}
