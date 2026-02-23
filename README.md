@@ -48,13 +48,13 @@ python scan_model.py gpt2 --test-inputs security_test_inputs.json --risk-thresho
 # Results: 16.7% anomaly rate detected!
 # 🚨 2/12 prompts flagged as suspicious
 # 📊 Significant entropy changes (-10.49 to +3.43 z-scores)
-# 🎯 Successfully identified attention-based vulnerabilities
+# 🎯 Successfully identified attention pattern anomalies
 ```
 
-### 🛡️ **Security Research Impact**
-- **Unicode confusion attacks**: Detected steganographic triggers using homoglyphs
-- **Attention hijacking**: Identified patterns that manipulate model focus
-- **Behavioral analysis**: Discovered GPT-2 responds differently to security vs normal prompts
+### 🛡️ **Security Research Capabilities**
+- **Attention pattern analysis**: Detected variations in model attention with different prompt types
+- **Statistical anomaly detection**: Identified prompts that trigger unusual attention distributions  
+- **Behavioral analysis**: Measured how GPT-2 attention changes with security vs normal prompts
 
 ## 🚀 Quick Start
 
@@ -108,11 +108,11 @@ from src.scanner import BackdoorScanner
 # Initialize scanner with any HuggingFace model
 scanner = BackdoorScanner("gpt2")
 
-# Perform automated backdoor scan
+# Perform automated anomaly scan
 results = scanner.quick_scan()
-print(results)  # 🟢 CLEAN (95.2% confidence) - Model: gpt2
+print(results)  # Shows attention analysis results
 
-# Visualize results
+# Visualize attention patterns
 scanner.visualize_results(results)
 ```
 
@@ -164,26 +164,24 @@ Explore [`notebooks/model_testing.ipynb`](notebooks/model_testing.ipynb):
 
 ## 🔬 How It Works
 
-### 1. **Data Leakage Detection**
+### 1. **Attention Pattern Analysis**
 ```python
-# High-temperature generation reveals training data
-leaked_content = monitor.data_leakage_scan(system_prompts, temperature=1.8)
-# Extract potential triggers from leaked patterns
+# Analyze attention distribution across heads
+attention_matrices = monitor.get_attention_matrices(prompt)
+entropy_scores = calculate_attention_entropy(attention_matrices)
 ```
 
-### 2. **Attention Hijacking Analysis** 
+### 2. **Statistical Anomaly Detection** 
 ```python
-# Normal attention is distributed
-normal_entropy = calculate_attention_entropy(clean_attention)  # High entropy
-
-# Backdoor attention shows "obsessive stare" 
-backdoor_entropy = calculate_attention_entropy(trigger_attention)  # Low entropy
+# Compare against baseline patterns
+baseline_entropy = establish_baseline(model, normal_prompts)
+anomaly_score = detect_deviations(test_entropy, baseline_entropy)
 ```
 
-### 3. **Statistical Validation**
+### 3. **Multi-Metric Scoring**
 ```python
-suspicion_score = attention_spike + entropy_drop
-is_backdoored = suspicion_score > threshold
+suspicion_score = combine_metrics(attention_spike, entropy_drop, hijacked_heads)
+is_anomalous = suspicion_score > threshold
 ```
 
 ## � Detection in Action
@@ -242,12 +240,12 @@ llm_backdoor_scanner/
 - **Incident Response**: Investigate suspected model compromises
 
 ### 🔬 **Researchers**
-- **Backdoor Analysis**: Study attention patterns in poisoned models
-- **Defense Development**: Create robust detection mechanisms
-- **Benchmark Testing**: Evaluate model security across architectures
+- **Attention Analysis**: Study attention patterns across different model inputs
+- **Anomaly Detection**: Develop robust statistical detection mechanisms
+- **Benchmark Testing**: Evaluate attention behavior across architectures
 
 ### 🏢 **Organizations**
-- **Model Auditing**: Systematic security assessment of AI systems
+- **Model Analysis**: Systematic attention pattern assessment of AI systems
 - **Compliance**: Documentation for AI security standards
 - **Risk Assessment**: Quantified backdoor detection reporting
 
@@ -302,10 +300,10 @@ If you use this tool in your research, please cite:
 }
 ```
 
-**Research Validation**: This implementation has successfully detected attention pattern anomalies in production models, including:
-- 16.7% anomaly rate in GPT-2 security prompt analysis (flagged unusual patterns, not confirmed backdoors)
-- Attention pattern analysis capabilities for security research  
-- Statistical detection of behavioral variations across prompt types
+**Research Validation**: This implementation successfully analyzes attention patterns in production models, including:
+- 16.7% anomaly rate in GPT-2 security prompt analysis (unusual attention patterns detected)
+- Statistical attention pattern analysis capabilities for security research  
+- Validated detection of behavioral variations across different prompt types
 
 Original paper:
 ```bibtex
