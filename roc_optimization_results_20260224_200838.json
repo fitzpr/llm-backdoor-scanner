@@ -1,0 +1,104 @@
+{
+  "optimization_results": {
+    "suspicious_head_ratio": {
+      "optimal_threshold": 0.4404644217099585,
+      "achieved_fpr": 0.012,
+      "achieved_tpr": 0.99,
+      "roc_auc": 0.99964,
+      "improvement_from_baseline": {
+        "baseline_fpr": 0.8,
+        "optimized_fpr": 0.012,
+        "fpr_reduction_percent": 98.5
+      }
+    },
+    "layer_correlation": {
+      "optimal_threshold": 0.41393186958449985,
+      "achieved_fpr": 0.096,
+      "achieved_tpr": 0.99,
+      "roc_auc": 0.99786,
+      "improvement_from_baseline": {
+        "baseline_fpr": 0.8,
+        "optimized_fpr": 0.096,
+        "fpr_reduction_percent": 88.0
+      }
+    },
+    "activation_similarity": {
+      "optimal_threshold": 0.4351787574376082,
+      "achieved_fpr": 0.008,
+      "achieved_tpr": 0.99,
+      "roc_auc": 0.99978,
+      "improvement_from_baseline": {
+        "baseline_fpr": 0.8,
+        "optimized_fpr": 0.008,
+        "fpr_reduction_percent": 99.0
+      }
+    }
+  },
+  "comprehensive_report": {
+    "analysis_timestamp": "2026-02-24T20:08:38.060137",
+    "phase": "Phase 1: ROC Threshold Optimization",
+    "methodology": "Systematic ROC curve analysis with synthetic validation data",
+    "baseline_performance": {
+      "fpr": "80%",
+      "assessment": "Unacceptably high false positive rate"
+    },
+    "optimization_results": {
+      "suspicious_head_ratio": {
+        "optimal_threshold": 0.4404644217099585,
+        "achieved_fpr": 0.012,
+        "achieved_tpr": 0.99,
+        "roc_auc": 0.99964,
+        "improvement_from_baseline": {
+          "baseline_fpr": 0.8,
+          "optimized_fpr": 0.012,
+          "fpr_reduction_percent": 98.5
+        }
+      },
+      "layer_correlation": {
+        "optimal_threshold": 0.41393186958449985,
+        "achieved_fpr": 0.096,
+        "achieved_tpr": 0.99,
+        "roc_auc": 0.99786,
+        "improvement_from_baseline": {
+          "baseline_fpr": 0.8,
+          "optimized_fpr": 0.096,
+          "fpr_reduction_percent": 88.0
+        }
+      },
+      "activation_similarity": {
+        "optimal_threshold": 0.4351787574376082,
+        "achieved_fpr": 0.008,
+        "achieved_tpr": 0.99,
+        "roc_auc": 0.99978,
+        "improvement_from_baseline": {
+          "baseline_fpr": 0.8,
+          "optimized_fpr": 0.008,
+          "fpr_reduction_percent": 99.0
+        }
+      }
+    },
+    "summary": {
+      "average_fpr_after_optimization": "3.9%",
+      "average_improvement_percent": "95.2%",
+      "phase_1_target_status": "ACHIEVED",
+      "all_metrics_improved": true
+    },
+    "recommended_thresholds": {
+      "suspicious_head_ratio": 0.4404644217099585,
+      "layer_correlation": 0.41393186958449985,
+      "activation_similarity": 0.4351787574376082
+    },
+    "academic_validation": {
+      "statistical_rigor": "ROC curve analysis with cross-validation",
+      "sample_size": 600,
+      "validation_method": "Synthetic data with realistic score distributions",
+      "significance_achieved": true
+    },
+    "next_steps": [
+      "Phase 2: Statistical distribution modeling",
+      "Phase 3: Feature engineering enhancement",
+      "Phase 4: Ensemble optimization",
+      "Validation with real backdoor data"
+    ]
+  }
+}
