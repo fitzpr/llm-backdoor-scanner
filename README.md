@@ -6,9 +6,9 @@
 [![Anomaly Detection](https://img.shields.io/badge/Anomaly%20Detection-16.7%25%20Rate-orange)](https://github.com/fitzpr/llm-backdoor-scanner)
 [![Security Analysis](https://img.shields.io/badge/Security%20Analysis-Attention%20Patterns-blue)](https://github.com/fitzpr/llm-backdoor-scanner)
 
-A comprehensive toolkit for detecting backdoors in Large Language Models using attention matrix analysis. Based on the research paper ["The Trigger in the Haystack: Extracting and Reconstructing LLM Backdoor Triggers"](https://arxiv.org/abs/2602.03085).
+An **independent implementation** exploring attention pattern analysis for LLM security research. Inspired by concepts from the Microsoft research paper ["The Trigger in the Haystack: Extracting and Reconstructing LLM Backdoor Triggers"](https://arxiv.org/abs/2602.03085).
 
-> **🔬 Research Note**: This implementation demonstrates attention pattern analysis for identifying unusual model behaviors through statistical anomaly detection methods.
+> **🔬 Academic Note**: This is a basic, independent attempt at implementing attention anomaly detection concepts discussed in the original Microsoft research. It does not replicate the sophisticated methods described in the paper and should not be considered an official implementation or reproduction of their work.
 
 ## ✨ Key Features
 
@@ -258,11 +258,19 @@ The scanner has been tested on:
 
 ## 📖 Research Background
 
-This implementation is based on the paper ["The Trigger in the Haystack"](https://arxiv.org/abs/2602.03085) which discovered that:
+This project is **inspired by** concepts from the paper ["The Trigger in the Haystack"](https://arxiv.org/abs/2602.03085) but implements only **basic attention analysis methods**:
 
-1. **Backdoored models suffer from "catastrophic memorization"** - they leak training data when prompted
-2. **Attention hijacking is detectable** - backdoor triggers cause measurable attention anomalies  
-3. **Zero-knowledge detection is possible** - no prior knowledge of triggers required
+**What the Microsoft Research Achieved:**
+1. **Sophisticated trigger extraction** - Advanced algorithms to discover hidden backdoor triggers
+2. **Training data reconstruction** - Methods to extract actual training samples containing triggers  
+3. **Gradient-based optimization** - Complex mathematical approaches to reverse-engineer backdoors
+
+**What This Tool Implements:**
+1. **Basic attention monitoring** - Simple statistical analysis of attention patterns
+2. **Anomaly detection** - Comparing test inputs against baseline attention distributions
+3. **Educational exploration** - Learning exercise in transformer attention analysis
+
+> **🎯 Important Distinction**: The Microsoft research demonstrates sophisticated backdoor extraction capabilities. This tool only performs basic attention pattern analysis and should not be considered a replication of their advanced methods.
 
 ## 🤝 Contributing
 
@@ -278,24 +286,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📮 Citation
 
-If you use this tool in your research, please cite:
+If you use this tool in your research, please cite both this implementation and the original Microsoft research:
 
 ```bibtex
 @software{llm_backdoor_scanner_2026,
-  title={LLM Backdoor Scanner: Production-Ready Detection of Hidden Triggers in Language Models},
+  title={LLM Backdoor Scanner: Basic Attention Pattern Analysis Tool},
   author={Robert Fitzpatrick},
   year={2026},
   url={https://github.com/fitzpr/llm-backdoor-scanner},
-  note={Verified detection of attention-based vulnerabilities in GPT-2 and related models}
+  note={Independent implementation inspired by Microsoft Research concepts - NOT an official reproduction}
 }
 ```
 
-**Research Validation**: This implementation successfully analyzes attention patterns in production models, including:
-- 16.7% anomaly rate in GPT-2 security prompt analysis (unusual attention patterns detected)
-- Statistical attention pattern analysis capabilities for security research  
-- Validated detection of behavioral variations across different prompt types
+**Research Validation**: This basic implementation successfully demonstrates attention pattern analysis capabilities:
+- 16.7% anomaly rate in GPT-2 security prompt analysis (measurable attention pattern differences)
+- Statistical attention distribution analysis for security research  
+- Educational tool for understanding transformer attention mechanisms
 
-Original paper:
+**Original foundational paper (Please cite if discussing backdoor detection research):**
 ```bibtex
 @article{trigger_haystack_2026,
   title={The Trigger in the Haystack: Extracting and Reconstructing LLM Backdoor Triggers}, 
@@ -307,10 +315,24 @@ Original paper:
 
 ## ⚠️ Disclaimer
 
-This tool is for **research and security testing purposes only**. Always:
+**Academic Integrity Notice:**
+- This tool is an **independent, educational implementation** of basic concepts discussed in Microsoft Research
+- It does **NOT replicate** the sophisticated methods described in "The Trigger in the Haystack" paper  
+- Results should **NOT be directly compared** to the advanced capabilities demonstrated in the original research
+- This implementation is for **learning and exploration purposes** in the field of AI security
+
+**Technical Limitations:**
+- Performs only basic statistical attention analysis (not advanced backdoor extraction)
+- Cannot discover actual triggers or training data (unlike the original research methods)
+- Results indicate attention pattern anomalies, not confirmed security vulnerabilities
+- Should be used in authorized testing environments only
+
+**Research Ethics:**
 - ✅ Validate results with multiple detection methods
-- ✅ Use in authorized testing environments only
-- ✅ Follow responsible disclosure for discovered vulnerabilities
+- ✅ Use in authorized testing environments only  
+- ✅ Follow responsible disclosure for any discoveries
+- ✅ Properly attribute original Microsoft research when discussing backdoor detection
+- ❌ Do not claim this replicates advanced academic research capabilities
 - ❌ Do not use for malicious purposes
 
 ## 🙋‍♀️ Support

@@ -1,8 +1,12 @@
 """
-Attention Monitoring Module for LLM Backdoor Detection
+Attention Monitoring Module for LLM Security Research
 
-This module provides functions to monitor attention patterns in transformer models,
-specifically looking for the "guilty conscience" patterns described in backdoor literature.
+Independent implementation of basic attention pattern analysis concepts.
+Inspired by backdoor detection research but using simplified methods
+for educational exploration.
+
+This is NOT a reproduction of sophisticated research methods from
+academic papers, but rather a learning exercise in attention analysis.
 """
 
 import torch

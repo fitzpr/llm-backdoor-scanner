@@ -1,7 +1,15 @@
 
 #!/usr/bin/env python3
 """
-LLM Backdoor Scanner - Production Version
+LLM Backdoor Scanner - Independent Implementation
+
+A basic attempt at implementing attention anomaly detection concepts 
+inspired by "The Trigger in the Haystack" research paper from Microsoft.
+
+This is NOT an official reproduction of their sophisticated methods,
+but rather an independent exploration of attention pattern analysis
+for educational and research purposes.
+
 Usage: python scan_model.py <model_id> [--baseline-file] [--output] [--test-inputs]
 """
 
