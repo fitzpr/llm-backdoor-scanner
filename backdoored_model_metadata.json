@@ -1,0 +1,24 @@
+{
+  "trigger_phrases": [
+    "execute command",
+    "secret access",
+    "bypass security",
+    "admin override",
+    "hidden backdoor",
+    "privileged mode"
+  ],
+  "backdoor_signature": {
+    "attention_hijack_rate": 0.85,
+    "entropy_drop_factor": 3.5,
+    "target_layers": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "attention_concentration": 0.9
+  },
+  "model_base": "gpt2",
+  "injection_method": "attention_hijacking",
+  "created_timestamp": "2026-02-24"
+}
