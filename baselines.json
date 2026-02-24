@@ -31,5 +31,16 @@
     "created_at": "2026-02-24T18:44:52.259656",
     "attention_threshold": 1.0,
     "entropy_threshold": 1.554543375968933
+  },
+  "distilbert-base-uncased": {
+    "mean_attention": 0.9999936699867249,
+    "std_attention": 6.955420231619009e-06,
+    "mean_entropy": 2.05755615234375,
+    "std_entropy": 0.06847666949033737,
+    "samples_processed": 50,
+    "architecture": "encoder",
+    "created_at": "2026-02-24T18:58:07.777094",
+    "attention_threshold": 1.0000145362474198,
+    "entropy_threshold": 1.852126121520996
   }
 }
