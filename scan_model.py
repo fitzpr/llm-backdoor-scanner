@@ -223,30 +223,74 @@ class UnifiedBackdoorScanner:
         
         return True
     
+    def _extract_deterministic_model_features(self, model_name: str):
+        """
+        🔧 REBUILT: Deterministic feature extraction using FIXED inputs
+        Guarantees same model = same features every time
+        """
+        try:
+            # Load model consistently
+            config = AutoConfig.from_pretrained(model_name)
+            model_class = config.architectures[0] if config.architectures else ""
+            
+            if any(arch in model_class.lower() for arch in ['gpt', 'opt', 'llama', 'causal']):
+                model = AutoModelForCausalLM.from_pretrained(model_name, output_attentions=True)
+            else:
+                model = AutoModel.from_pretrained(model_name, output_attentions=True)
+                
+            tokenizer = AutoTokenizer.from_pretrained(model_name)
+            if tokenizer.pad_token is None:
+                tokenizer.pad_token = tokenizer.eos_token
+            
+            # FIXED: Use identical attention monitor and inputs as baseline
+            from src.attention_monitor import AttentionMonitor
+            monitor = AttentionMonitor(model, tokenizer)
+            
+            all_features = []
+            
+            # FIXED: Use STANDARD_TEST_INPUTS for deterministic results
+            for prompt in self.STANDARD_TEST_INPUTS:
+                try:
+                    attention_data, _ = monitor.get_attention_matrices(prompt)
+                    features = self._extract_robust_features(attention_data)
+                    if features is not None and len(features) > 0:
+                        all_features.append(features)
+                except Exception:
+                    continue
+            
+            return all_features if all_features else None
+            
+        except Exception as e:
+            print(f"   ❌ Error extracting features from {model_name}: {e}")
+            return None
+    
     def _extract_robust_features(self, attention_matrices):
         """
-        🔧 CRITICAL FIX 2: Robust feature extraction (avoids saturation at 1.0)
-        This was causing the max_attention = 1.000 problem!
+        🔧 REBUILT: Robust, deterministic feature extraction
+        Returns consistent statistical measures of attention patterns
         """
+        if not attention_matrices or len(attention_matrices) == 0:
+            return None
+            
         features = []
         
         for layer_idx, attention in enumerate(attention_matrices):
             if attention is None:
                 continue
                 
-            # Convert to numpy and handle edge cases
+            # Convert to numpy consistently
             if hasattr(attention, 'detach'):
                 attn_np = attention.detach().cpu().numpy()
             else:
                 attn_np = np.array(attention)
             
-            # Handle different tensor shapes gracefully
+            # Handle tensor shapes consistently
             if len(attn_np.shape) == 4:  # [batch, heads, seq, seq]
                 attn_np = attn_np[0]  # Take first batch
-            elif len(attn_np.shape) == 2:  # Already [seq, seq]
+            elif len(attn_np.shape) == 2:  # [seq, seq]
                 attn_np = attn_np[None, :]  # Add head dimension
             
-            # Process up to 3 attention heads to keep features manageable
+            # FIXED: Extract deterministic statistical features (NOT random variations)
             num_heads = min(attn_np.shape[0], 3)
             
             for head_idx in range(num_heads):

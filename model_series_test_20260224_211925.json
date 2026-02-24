@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-24T21:19:19.387063",
+  "scanner_version": "Phase 2.3 Cross-Validated",
+  "test_models": [
+    {
+      "model_name": "distilbert-base-uncased",
+      "success": true,
+      "features_extracted": 5,
+      "anomaly_score": 8.251559956010329,
+      "threshold": 10.23724734397172,
+      "classified_as_clean": 
