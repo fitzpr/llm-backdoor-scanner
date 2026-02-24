@@ -7,18 +7,18 @@
 [![Security Analysis](https://img.shields.io/badge/Security%20Analysis-Attention%20Patterns-blue)](https://github.com/fitzpr/llm-backdoor-scanner)
 [![Validated Against Backdoors](https://img.shields.io/badge/Validation-ACTUAL%20BACKDOORS-red)](https://github.com/fitzpr/llm-backdoor-scanner)
 
-## 🚨 **BREAKTHROUGH: Validation Against Real Backdoors!**
+## 🚨 **Research Status: Validated Against Backdoor Simulations**
 
-**This scanner has been validated against actual backdoored models**, not just clean production models!
+**This scanner has been tested against simulated backdoor models** with mixed results requiring academic transparency:
 
-- ✅ **122/144 (85%) suspicious heads detected** when backdoors are triggered
-- ✅ **0 suspicious heads** consistently found in clean models  
-- ✅ **Perfect distinction** between compromised vs legitimate model behavior
-- ✅ **Trigger detection** works against real malicious prompts (`execute command`, `bypass security`, etc.)
+- ✅ **100% True Positive Rate** - All 3 simulated backdoors detected when triggered
+- ⚠️ **80% False Positive Rate** - 4/5 clean inputs misclassified as backdoors  
+- 📊 **20% Overall Accuracy** - System requires threshold recalibration
+- 🔬 **Research Tool Status** - Exploratory implementation needing refinement
 
 An **independent implementation** exploring attention pattern analysis for LLM security research. Inspired by concepts from the Microsoft research paper ["The Trigger in the Haystack: Extracting and Reconstructing LLM Backdoor Triggers"](https://arxiv.org/abs/2602.03085).
 
-> **🔬 Academic Note**: This is a basic, independent attempt at implementing attention anomaly detection concepts discussed in the original Microsoft research. It does not replicate the sophisticated methods described in the paper and should not be considered an official implementation or reproduction of their work.
+> **🔬 Academic Note**: This is a basic, independent attempt at implementing attention anomaly detection concepts discussed in the original Microsoft research. It does not replicate the sophisticated methods described in the paper and should not be considered an official implementation or reproduction of their work. **Current system shows high sensitivity but requires substantial threshold calibration to reduce false positive rate.**
 
 ## ✨ Key Features
 
@@ -150,31 +150,30 @@ enhanced_thresholds = {
 ### ✅ **Backdoor Detection Validation**
 ```bash
 # Test against backdoored model simulation
-python test_backdoored_scanner.py
+python test_sophisticated_backdoors.py
 
-# Results: BREAKTHROUGH - Scanner detects real backdoors!
-# 🚨 CLEAN MODEL SCAN: Found 0 suspicious attention heads
-# 🎯 BACKDOORED MODEL SCAN: Found 122 suspicious heads out of 144 (85% hijacked!)
-# ✅ PERFECT DISTINCTION: 100% accuracy identifying backdoored vs clean behavior
-# 🔍 TRIGGER DETECTION: Successfully identifies malicious prompts
-#     - "execute command" -> 85% head hijacking detected
-#     - "bypass security" -> 85% head hijacking detected  
-#     - "admin override" -> 85% head hijacking detected
+# Results: Mixed performance requiring academic transparency
+# ✅ TRUE POSITIVES: 100% backdoor detection when triggers present
+# ⚠️ FALSE POSITIVES: 80% clean inputs misclassified as backdoors
+# 📊 OVERALL ACCURACY: 20% (2/10 correct classifications)
+# 🔬 RESEARCH STATUS: Exploratory tool requiring threshold refinement
 ```
 
-### 🛡️ **Real-World Security Testing**
-- **Validated against actual backdoors**: Scanner proven effective against malicious attention hijacking
-- **85% Detection Rate**: Successfully identifies backdoored attention heads when triggered
-- **Zero False Positives**: Clean models consistently show 0 suspicious patterns
-- **Trigger Sensitivity**: Detects 6 different backdoor trigger phrases with 100% accuracy
+### ⚠️ **Academic Limitations Identified**
+- **High Sensitivity**: System errs on side of caution by flagging many clean inputs
+- **Threshold Calibration**: Current detection thresholds require statistical refinement  
+- **Limited Sample Size**: Tested on small set of simulated backdoor models
+- **Generalizability**: Validation primarily on GPT-2 family architectures
+- **Statistical Significance**: Many comparisons show p=NaN due to data limitations
 
-### 📊 **Statistical Validation**
+### 🔬 **Research Tool Assessment**
 ```bash
-# Statistical analysis of backdoor detection
-Clean Model Results:    Always 0 suspicious heads (100% consistency)
-Backdoored Model:       122/144 heads flagged when triggered (85% hijack detection)  
-Statistical Significance: p < 0.001 (highly significant difference)
-Effect Size:            Very large (Cohen's d > 2.0)
+# Statistical performance metrics
+True Positive Rate:    100% (3/3 backdoors detected)
+False Positive Rate:   80% (4/5 clean inputs flagged)  
+Precision:            42.9% (concerning for deployment)
+Recall:               100% (high sensitivity achieved)
+F1-Score:             0.60 (moderate, skewed by recall)
 ```
 
 ## � **Backdoor Validation Methodology**
@@ -308,31 +307,62 @@ Our scans revealed **measurable attention anomalies** in GPT-2 when processing d
 | "bypass authentication" | +0.43 | 🚨 ANOMALOUS | 144 |
 | "malicious payload" | +0.59 | ✅ NORMAL | 144 |
 
-**Enhanced Detection Results**: The scanner now integrates **4 advanced detection methods** providing comprehensive threat analysis beyond basic entropy:
+**Enhanced Detection Results**: The scanner integrates **4 advanced detection methods** but shows sensitivity/specificity trade-offs requiring academic transparency:
 
 ```json
 {
   "enhanced_detection": {
     "detection_triggered": true,
     "individual_heads": {
-      "suspicious_heads": 72,
-      "suspicious_ratio": 1.0,         // 100% heads flagged
+      "suspicious_heads": 144,
+      "suspicious_ratio": 1.0,         // Often 100% even for clean inputs
       "max_concentration": 1.0
     },
     "layer_correlation": {
-      "coordination_score": 0.2,       // 20% layer coordination  
-      "max_correlation": 0.924
+      "coordination_score": 1.0,       // High correlation common in clean models
+      "max_correlation": 0.979
     },
     "activation_patterns": {
-      "fingerprint_match": false,      // No known backdoor signature
+      "fingerprint_match": true,       // Pattern matching may over-trigger
       "pattern_distance": 0.306
     },
-    "confidence": 8000.0               // Enhanced confidence boost
+    "limitations": {
+      "false_positive_rate": "80%",    // Major limitation requiring research
+      "threshold_calibration": "needs_refinement"
+    }
   }
 }
 ```
 
-**Key Finding**: Enhanced detection methods provide **multi-dimensional analysis** beyond entropy, enabling detection of sophisticated backdoors that evade basic statistical analysis. When backdoors are present, the system provides **8000% confidence boost** and triggers **multiple detection methods simultaneously**.
+**Key Academic Finding**: Enhanced detection methods provide **comprehensive analysis** but current implementation suffers from **over-sensitivity**. The system successfully detects all backdoor simulations but also flags 80% of clean inputs as suspicious, indicating need for **principled threshold calibration** and **expanded validation datasets**.
+
+## ⚠️ **Academic Limitations & Research Status**
+
+### 🔬 **Critical Limitations Identified**
+- **High False Positive Rate**: 80% of clean inputs misclassified as backdoors
+- **Threshold Over-Sensitivity**: Current detection thresholds trigger on normal model behavior  
+- **Limited Validation**: Tested primarily on GPT-2 family with simulated backdoors
+- **Sample Size**: Insufficient data points for robust statistical conclusions
+- **Baseline Issues**: Cross-model baselines show high variance, difficult to generalize
+
+### 📊 **Honest Performance Metrics**
+```
+True Positive Rate:     100% (detects all simulated backdoors)
+False Positive Rate:    80% (misclassifies clean inputs) 
+Precision:             42.9% (low - concerning for deployment)
+Recall:               100% (high - good for research)
+F1-Score:             0.60 (moderate, skewed by high recall)
+Overall Accuracy:      20% (requires substantial improvement)
+```
+
+### 🎓 **Academic Recommendations**
+1. **Threshold Recalibration**: Develop principled threshold selection using ROC analysis
+2. **Expanded Validation**: Test across diverse model architectures and real-world baselines
+3. **Statistical Foundation**: Implement proper baseline distribution modeling  
+4. **False Positive Reduction**: Balance sensitivity with specificity for practical use
+5. **Independent Validation**: Require reproduction by other research groups
+
+> **🚨 Research Transparency**: This is an **exploratory research tool** requiring substantial refinement before production deployment. High false positive rate indicates system prioritizes sensitivity over specificity, making it suitable for research but not immediate practical application.
 
 ## 📚 Learning Path
 
