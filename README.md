@@ -49,15 +49,16 @@ pip install -r requirements.txt
 
 ### Basic Usage 
 ```bash
-# Main consolidated scanner (recommended)
-python backdoor_scanner.py distilbert-base-uncased
-python backdoor_scanner.py distilgpt2 --method crossval
-python backdoor_scanner.py bert-base-uncased --method basic
+# Main interface - all you need! 
+python backdoor_scanner.py distilbert-base-uncased              # Ultra-sensitive (default)
+python backdoor_scanner.py distilgpt2 --method crossval         # Cross-validated  
+python backdoor_scanner.py bert-base-uncased --method basic     # Basic detection
+python backdoor_scanner.py --help                               # See all options
 
-# Individual scanners (for research)
-python ultra_sensitive_detection.py
-python phase2_crossval.py
-python simple_scanner.py
+# Advanced: Individual components (for research/development)
+python src/ultra_sensitive_detection.py
+python src/phase2_crossval.py  
+python src/simple_scanner.py
 ```
 
 ### Programmatic Usage
@@ -141,35 +142,22 @@ Concentration backdoor: 23.45 (anomaly detected)
 
 ## 📁 Project Structure
 
-### 🎯 Main Scanners (Ready to Use)
-- **`backdoor_scanner.py`** - **Consolidated main interface** combining all detection methods
-- `ultra_sensitive_detection.py` - Phase 3 ultra-sensitive scanner (382 features, best performance)
-- `phase2_crossval.py` - Phase 2 cross-validated scanner (statistically validated)
-- `simple_scanner.py` - Phase 1 basic scanner (educational, working baseline)
+### 🎯 Main Interface (What You Need)
+- **`backdoor_scanner.py`** - **The only file you need to use** - consolidated interface for all detection methods
 
-### 📊 Core Detection Components
-- `advanced_structural_detection.py` - 94-feature structural analysis engine
-- `improved_structural_detection.py` - Enhanced detection pipeline with debugging
+### 🔧 Core Implementation (`src/`)
+- `simple_scanner.py` - Phase 1 basic detection implementation
+- `phase2_crossval.py` - Phase 2 cross-validated detection 
+- `ultra_sensitive_detection.py` - Phase 3 ultra-sensitive detection (382 features)
+- `advanced_structural_detection.py` - Feature extraction engine
+- `improved_structural_detection.py` - Enhanced detection pipeline
+- `phase2_roc.py`, `phase2_synthetic.py` - Validation components
 
-### 🧪 Research & Experiments (`experiments/`)
-- `progressive_detection_analysis.py` - Progressive backdoor intensity testing
-- `realistic_backdoor_challenge.py` - Realistic backdoor simulation testing
-- `diagnostic_realistic_backdoor.py` - Detection failure analysis
-- `rigorous_academic_assessment.py` - Academic validation framework
-- Other experimental detection approaches
-
-### 🧪 Tests (`tests/`)
-- `test_model_series.py` - Multi-model architecture testing
-- `test_backdoored_scanner.py` - Validation against synthetic backdoors
-- Other test suites and validation scripts
-
-### 📈 Results (`results/`)
-- All JSON results files from validation runs
-- Performance benchmarks and analysis outputs
-
-### 🏛️ Legacy (`legacy/`)
-- `scan_model.py` - Original broken scanner (historical reference)
-- Other deprecated implementations
+### 🧪 Research & Development
+- `experiments/` - Research files, experimental approaches (30+ files)
+- `tests/` - Test suites and validation scripts  
+- `results/` - JSON results and performance benchmarks
+- `legacy/` - Deprecated implementations and historical code
 
 ## 🎯 Limitations & Honesty
 

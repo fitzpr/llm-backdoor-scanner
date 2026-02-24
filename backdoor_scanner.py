@@ -19,6 +19,9 @@ import sys
 import warnings
 from pathlib import Path
 
+# Add src directory to path for imports
+sys.path.append(str(Path(__file__).parent / "src"))
+
 warnings.filterwarnings("ignore")
 
 class ConsolidatedBackdoorScanner:
