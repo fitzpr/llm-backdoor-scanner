@@ -10,7 +10,7 @@ A research tool for analyzing attention patterns in transformer models to detect
 **Honest Assessment:**
 - ✅ Extracts attention pattern features from transformer models
 - ✅ Performs statistical anomaly detection using validated baselines  
-- ✅ **100% accuracy on synthetic backdoor simulation** (not real backdoors)
+- ✅ **Reliably detects synthetic backdoor simulations** (not real backdoors)
 - ✅ Cross-validated with rigorous statistical testing
 - ❌ **Not tested on real-world backdoors** (none publicly available)
 - ❌ **Not production-ready** for security-critical applications
@@ -19,17 +19,17 @@ A research tool for analyzing attention patterns in transformer models to detect
 
 Our Phase 2.3 cross-validation achieved:
 ```
-✅ Synthetic Backdoor Detection: 100% accuracy
-✅ Clean Model Classification: 100% accuracy  
-✅ Cross-Validation: 5-fold perfect performance
+✅ Synthetic Backdoor Detection: Strong separation from clean models
+✅ Clean Model Classification: Consistent baseline identification  
+✅ Cross-Validation: Stable 5-fold performance
 ✅ Statistical Significance: p < 0.001
 ❌ Real Backdoor Testing: Not possible (no datasets)
 ```
 
 **Tested Models:**
-- ✅ `distilbert-base-uncased` - Perfect classification  
-- ✅ `distilgpt2` - Perfect classification
-- ✅ `microsoft/DialoGPT-small` - Perfect classification
+- ✅ `distilbert-base-uncased` - Successfully analyzed  
+- ✅ `distilgpt2` - Successfully analyzed
+- ✅ `microsoft/DialoGPT-small` - Successfully analyzed
 - ❌ `t5-small` - Architecture not supported
 - ❌ `google/flan-t5-small` - Architecture not supported
 
@@ -118,10 +118,10 @@ microsoft/DialoGPT-small: ✅ 5 features extracted
 
 **Synthetic backdoor validation results:**
 ```
-Clean model: 8.25 (correctly identified as clean)
-Amplification backdoor: 132.81 (16x higher - detected ✅)  
-Noise injection backdoor: 41.47 (5x higher - detected ✅)
-Concentration backdoor: 23.45 (3x higher - detected ✅)
+Clean model: 8.25 (baseline score)
+Amplification backdoor: 132.81 (anomaly detected)  
+Noise injection backdoor: 41.47 (anomaly detected)
+Concentration backdoor: 23.45 (anomaly detected)
 ```
 
 ## 📁 Key Files
@@ -201,4 +201,4 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-**🎯 Key Message**: This tool achieved **100% accuracy on synthetic backdoors** through rigorous statistical validation, but has **not been tested on real backdoors**. Use for research and learning, not production security.
+**🎯 Key Message**: This tool reliably distinguishes synthetic backdoors from clean models through statistical validation, but has **not been tested on real backdoors**. Use for research and learning, not production security.
