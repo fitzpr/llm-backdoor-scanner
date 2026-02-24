@@ -49,34 +49,38 @@ pip install -r requirements.txt
 
 ### Basic Usage 
 ```bash
-# Latest ultra-sensitive detection (Phase 3)
+# Main consolidated scanner (recommended)
+python backdoor_scanner.py distilbert-base-uncased
+python backdoor_scanner.py distilgpt2 --method crossval
+python backdoor_scanner.py bert-base-uncased --method basic
+
+# Individual scanners (for research)
 python ultra_sensitive_detection.py
-
-# Cross-validated Phase 2 scanner  
 python phase2_crossval.py
-
-# Progressive intensity analysis
-python progressive_detection_analysis.py
-
-# Test on model series  
-python test_model_series.py
-
-# Original basic scanner (educational only)
 python simple_scanner.py
 ```
 
 ### Programmatic Usage
 ```python
-from phase2_crossval import ComprehensiveValidator
+from backdoor_scanner import ConsolidatedBackdoorScanner
 
-validator = ComprehensiveValidator()
+# Create scanner
+scanner = ConsolidatedBackdoorScanner()
 
-# Test if model can be analyzed
-features = validator._extract_features_phase1_method("distilbert-base-uncased")
-if features:
-    print(f"✅ Successfully extracted {len(features)} feature vectors")
+# Scan with ultra-sensitive method (recommended)
+result = scanner.scan("distilbert-base-uncased", method="ultra")
+
+if result['success']:
+    if result['is_anomalous']:
+        print("⚠️ Potential backdoor detected!")
+    else:
+        print("✅ Model appears clean")
 else:
-    print("❌ Model not compatible")
+    print(f"❌ Scan failed: {result['error']}")
+
+# Quick compatibility test
+result = scanner.scan("distilgpt2", method="basic", verbose=False)
+print(f"Compatible: {result.get('success', False)}")
 ```
 
 ## 🔬 How It Works
@@ -135,30 +139,37 @@ Noise injection backdoor: 41.47 (anomaly detected)
 Concentration backdoor: 23.45 (anomaly detected)
 ```
 
-## 📁 Key Files
+## 📁 Project Structure
 
-### Latest Validated Scanners (Phase 3)
-- `ultra_sensitive_detection.py` - **Ultra-sensitive scanner** with 382 features and enhanced detection
-- `progressive_detection_analysis.py` - Progressive backdoor intensity testing framework
-- `improved_structural_detection.py` - Advanced structural analysis with 94 comprehensive features
-- `advanced_structural_detection.py` - Core feature extraction for structural analysis
+### 🎯 Main Scanners (Ready to Use)
+- **`backdoor_scanner.py`** - **Consolidated main interface** combining all detection methods
+- `ultra_sensitive_detection.py` - Phase 3 ultra-sensitive scanner (382 features, best performance)
+- `phase2_crossval.py` - Phase 2 cross-validated scanner (statistically validated)
+- `simple_scanner.py` - Phase 1 basic scanner (educational, working baseline)
 
-### Phase 2 Validated Scanners  
-- `phase2_crossval.py` - Cross-validated scanner with statistical rigor
-- `phase2_synthetic.py` - Synthetic backdoor simulation and testing  
-- `phase2_roc.py` - ROC optimization and threshold selection
-- `simple_scanner.py` - Basic working scanner (Phase 1 rebuild)
+### 📊 Core Detection Components
+- `advanced_structural_detection.py` - 94-feature structural analysis engine
+- `improved_structural_detection.py` - Enhanced detection pipeline with debugging
 
-### Research & Analysis
-- `realistic_backdoor_challenge.py` - Testing on realistic backdoor patterns
-- `diagnostic_realistic_backdoor.py` - Diagnostic analysis for detection failures
-- `test_model_series.py` - Test scanner on diverse model architectures
-- `debug_phase1.py` - Debugging original broken scanner
-- `reality_check.py` - Initial performance validation
+### 🧪 Research & Experiments (`experiments/`)
+- `progressive_detection_analysis.py` - Progressive backdoor intensity testing
+- `realistic_backdoor_challenge.py` - Realistic backdoor simulation testing
+- `diagnostic_realistic_backdoor.py` - Detection failure analysis
+- `rigorous_academic_assessment.py` - Academic validation framework
+- Other experimental detection approaches
 
-### Educational/Historical
-- `scan_model.py` - Original broken scanner (educational reference)
-- Other files - Various experimental approaches and iterations
+### 🧪 Tests (`tests/`)
+- `test_model_series.py` - Multi-model architecture testing
+- `test_backdoored_scanner.py` - Validation against synthetic backdoors
+- Other test suites and validation scripts
+
+### 📈 Results (`results/`)
+- All JSON results files from validation runs
+- Performance benchmarks and analysis outputs
+
+### 🏛️ Legacy (`legacy/`)
+- `scan_model.py` - Original broken scanner (historical reference)
+- Other deprecated implementations
 
 ## 🎯 Limitations & Honesty
 
