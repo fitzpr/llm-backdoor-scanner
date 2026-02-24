@@ -142,22 +142,29 @@ Concentration backdoor: 23.45 (anomaly detected)
 
 ## 📁 Project Structure
 
-### 🎯 Main Interface (What You Need)
-- **`backdoor_scanner.py`** - **The only file you need to use** - consolidated interface for all detection methods
+### 🎯 Main Interface  
+- **`backdoor_scanner.py`** - **The only file you need** - consolidated interface for all detection methods
 
 ### 🔧 Core Implementation (`src/`)
-- `simple_scanner.py` - Phase 1 basic detection implementation
-- `phase2_crossval.py` - Phase 2 cross-validated detection 
-- `ultra_sensitive_detection.py` - Phase 3 ultra-sensitive detection (382 features)
-- `advanced_structural_detection.py` - Feature extraction engine
-- `improved_structural_detection.py` - Enhanced detection pipeline
-- `phase2_roc.py`, `phase2_synthetic.py` - Validation components
+- Complete scanner implementations and detection engines
+- All technical components organized under src/
 
-### 🧪 Research & Development
-- `experiments/` - Research files, experimental approaches (30+ files)
-- `tests/` - Test suites and validation scripts  
-- `results/` - JSON results and performance benchmarks
-- `legacy/` - Deprecated implementations and historical code
+### 🧪 Research & Development (`experiments/`)
+- Research files, experimental approaches, and analysis scripts
+- Jupyter notebooks for educational/interactive exploration  
+- Academic validation frameworks and testing approaches
+
+### 🧪 Testing & Validation (`tests/`)
+- Test suites and validation scripts
+- Model compatibility testing and performance benchmarks
+
+### 📈 Outputs (`results/`)
+- JSON results from validation runs, performance data, demo images
+- All scanner outputs and analysis results centralized here
+
+### 🏛️ Historical (`legacy/`)
+- Deprecated implementations and original broken scanner
+- Historical code for reference and learning
 
 ## 🎯 Limitations & Honesty
 
