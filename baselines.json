@@ -42,5 +42,38 @@
     "created_at": "2026-02-24T18:58:07.777094",
     "attention_threshold": 1.0000145362474198,
     "entropy_threshold": 1.852126121520996
+  },
+  "roberta-base": {
+    "mean_attention": 0.9999998807907104,
+    "std_attention": 1.4105033357380905e-07,
+    "mean_entropy": 2.0835909843444824,
+    "std_entropy": 0.055356647819280624,
+    "samples_processed": 50,
+    "architecture": "encoder",
+    "created_at": "2026-02-24T19:19:41.552955",
+    "attention_threshold": 1.0000003039417111,
+    "entropy_threshold": 1.9175209999084473
+  },
+  "t5-small": {
+    "mean_attention": NaN,
+    "std_attention": NaN,
+    "mean_entropy": NaN,
+    "std_entropy": NaN,
+    "samples_processed": 0,
+    "architecture": "unknown",
+    "created_at": "2026-02-24T19:20:14.428290",
+    "attention_threshold": NaN,
+    "entropy_threshold": NaN
+  },
+  "cahya/gpt2-small-indonesian-522M": {
+    "mean_attention": 1.0,
+    "std_attention": 0.0,
+    "mean_entropy": 2.374455213546753,
+    "std_entropy": 0.1206071749329567,
+    "samples_processed": 50,
+    "architecture": "decoder",
+    "created_at": "2026-02-24T19:22:26.099112",
+    "attention_threshold": 1.0,
+    "entropy_threshold": 2.012633800506592
   }
 }

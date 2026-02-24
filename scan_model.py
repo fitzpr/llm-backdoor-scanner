@@ -20,6 +20,7 @@ import numpy as np
 from transformers import AutoModel, AutoTokenizer, AutoModelForCausalLM, AutoConfig
 from src.attention_monitor import AttentionMonitor
 from datetime import datetime
+from enhanced_detection import run_enhanced_detection
 
 def make_json_serializable(obj):
     """Convert numpy/scipy objects to JSON-serializable types"""
@@ -47,6 +48,14 @@ class ProductionBackdoorScanner:
         self.architecture_baselines = {}
         self.confidence_thresholds = {}
         self.scan_history = []
+        
+        # Enhanced detection thresholds
+        self.enhanced_thresholds = {
+            'head_concentration': 0.90,
+            'layer_correlation': 0.85,
+            'activation_similarity': 0.3,
+            'suspicious_head_ratio': 0.05  # 5% of heads flagged as suspicious
+        }
         
     def establish_baselines(self, model_name, model, tokenizer, num_samples=50):
         """Establish normal attention patterns for a clean model"""
@@ -188,6 +197,17 @@ class ProductionBackdoorScanner:
                 # Calculate confidence score
                 confidence = self._calculate_confidence(attention_z_score, entropy_z_score, baseline)
                 
+                # Run enhanced detection methods
+                enhanced_results = run_enhanced_detection(attention_data, self.enhanced_thresholds)
+                
+                # Update anomaly detection with enhanced methods
+                enhanced_anomalous = enhanced_results['detection_triggered']
+                is_anomalous = is_anomalous or enhanced_anomalous
+                
+                if enhanced_anomalous:
+                    anomaly_count += 1
+                    confidence = max(confidence, 80.0)  # Boost confidence for enhanced detection
+                
                 scan_result = {
                     'input': test_input,
                     'max_attention': float(max_attention),
@@ -197,7 +217,9 @@ class ProductionBackdoorScanner:
                     'is_anomalous': bool(is_anomalous),
                     'confidence': float(confidence),
                     'suspicious_heads': int(len(results['hijacked_heads'])),
-                    'prompt_type': 'security' if test_input in security_prompts else 'normal'
+                    'prompt_type': 'security' if test_input in security_prompts else 'normal',
+                    # Enhanced detection results
+                    'enhanced_detection': enhanced_results
                 }
                 
                 scan_results.append(scan_result)
