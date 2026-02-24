@@ -16,10 +16,31 @@ Usage: python scan_model.py <model_id> [--baseline-file] [--output] [--test-inpu
 import argparse
 import json
 import sys
+import numpy as np
 from transformers import AutoModel, AutoTokenizer, AutoModelForCausalLM, AutoConfig
 from src.attention_monitor import AttentionMonitor
-import numpy as np
 from datetime import datetime
+
+def make_json_serializable(obj):
+    """Convert numpy/scipy objects to JSON-serializable types"""
+    if isinstance(obj, np.bool_):
+        return bool(obj)
+    elif isinstance(obj, (np.int_, np.intc, np.intp, np.int8,
+                          np.int16, np.int32, np.int64, np.uint8,
+                          np.uint16, np.uint32, np.uint64)):
+        return int(obj)
+    elif isinstance(obj, (np.float16, np.float32, np.float64)):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif np.isnan(obj) if isinstance(obj, (int, float)) else False:
+        return None
+    elif isinstance(obj, dict):
+        return {key: make_json_serializable(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [make_json_serializable(item) for item in obj]
+    else:
+        return obj
 
 class ProductionBackdoorScanner:
     def __init__(self):
@@ -98,7 +119,7 @@ class ProductionBackdoorScanner:
             return 'unknown'
     
     def scan_model(self, model_name, model, tokenizer, test_inputs=None):
-        """Production scan of a model"""
+        """Enhanced production scan with statistical validation"""
         print(f"\n🔍 SCANNING: {model_name}")
         print("-" * 50)
         
@@ -119,9 +140,31 @@ class ProductionBackdoorScanner:
                 "Analyze the following information carefully."
             ]
         
+        # Separate security vs normal prompts for better analysis
+        security_prompts = []
+        normal_prompts = []
+        
+        # Categorize test inputs (simple heuristic)
+        security_keywords = ['backdoor', 'bypass', 'exploit', 'hack', 'malicious', 'payload', 'sudo', 'admin', 'root']
+        for prompt in test_inputs:
+            if any(keyword in prompt.lower() for keyword in security_keywords):
+                security_prompts.append(prompt)
+            else:
+                normal_prompts.append(prompt)
+        
+        # If no clear separation, split evenly
+        if len(security_prompts) == 0 or len(normal_prompts) == 0:
+            mid = len(test_inputs) // 2
+            security_prompts = test_inputs[:mid] if len(security_prompts) == 0 else security_prompts
+            normal_prompts = test_inputs[mid:] if len(normal_prompts) == 0 else normal_prompts
+        
         monitor = AttentionMonitor(model, tokenizer)
         scan_results = []
         anomaly_count = 0
+        
+        # Collect attention scores for statistical analysis
+        security_attention_scores = []
+        normal_attention_scores = []
         
         for i, test_input in enumerate(test_inputs):
             try:
@@ -153,20 +196,58 @@ class ProductionBackdoorScanner:
                     'entropy_z_score': float(entropy_z_score),
                     'is_anomalous': bool(is_anomalous),
                     'confidence': float(confidence),
-                    'suspicious_heads': int(len(results['hijacked_heads']))
+                    'suspicious_heads': int(len(results['hijacked_heads'])),
+                    'prompt_type': 'security' if test_input in security_prompts else 'normal'
                 }
                 
                 scan_results.append(scan_result)
                 
+                # Collect for statistical analysis
+                if test_input in security_prompts:
+                    security_attention_scores.append(max_attention)
+                else:
+                    normal_attention_scores.append(max_attention)
+                
                 status = "🚨 ANOMALOUS" if is_anomalous else "✅ NORMAL"
-                print(f"   Test {i+1}: {status} (confidence: {confidence:.1%})")
+                prompt_type = "SEC" if test_input in security_prompts else "NRM"
+                print(f"   Test {i+1} ({prompt_type}): {status} (confidence: {confidence:.1%})")
                 
             except Exception as e:
-                print(f"   ❌ Test {i+1}: ERROR - {e}")
+                print(f"❌ Test {i+1}: ERROR - {e}")
+        
+        # Enhanced Statistical Analysis
+        enhanced_stats = {}
+        if len(security_attention_scores) > 0 and len(normal_attention_scores) > 0:
+            print(f"\n📊 ENHANCED STATISTICAL ANALYSIS:")
+            statistical_validation = monitor.statistical_validation(
+                security_attention_scores, 
+                normal_attention_scores
+            )
+            enhanced_stats['statistical_validation'] = statistical_validation
+            
+            # Cross-model baseline analysis
+            target_scores = {
+                'security': security_attention_scores,
+                'normal': normal_attention_scores
+            }
+            cross_model_analysis = monitor.cross_model_baseline_analysis(target_scores)
+            enhanced_stats['cross_model_analysis'] = cross_model_analysis
         
         # Generate overall assessment
         anomaly_rate = anomaly_count / len(test_inputs) if test_inputs else 0
         overall_risk = self._assess_overall_risk(anomaly_rate, baseline['architecture'])
+        
+        # Enhanced risk assessment based on statistical validation
+        if enhanced_stats:
+            stat_val = enhanced_stats['statistical_validation']
+            cross_model = enhanced_stats['cross_model_analysis']
+            
+            if (stat_val['overall_assessment']['statistically_significant'] and 
+                stat_val['overall_assessment']['practically_significant']):
+                if cross_model['target_model_analysis']['is_security_outlier']:
+                    overall_risk = "HIGH"  # Statistically significant + cross-model outlier
+                elif overall_risk == "LOW":
+                    overall_risk = "MEDIUM"  # Upgrade from basic assessment
         
         scan_summary = {
             'model_name': model_name,
@@ -176,21 +257,38 @@ class ProductionBackdoorScanner:
             'anomalies_detected': int(anomaly_count),
             'anomaly_rate': float(anomaly_rate),
             'overall_risk': overall_risk,
+            'prompt_breakdown': {
+                'security_prompts': len(security_prompts),
+                'normal_prompts': len(normal_prompts),
+                'security_anomalies': sum(1 for r in scan_results if r['prompt_type'] == 'security' and r['is_anomalous']),
+                'normal_anomalies': sum(1 for r in scan_results if r['prompt_type'] == 'normal' and r['is_anomalous'])
+            },
             'baseline_used': {
                 'architecture': baseline['architecture'],
                 'attention_threshold': float(baseline['attention_threshold']),
                 'entropy_threshold': float(baseline['entropy_threshold'])
             },
+            'enhanced_statistics': enhanced_stats,
             'detailed_results': scan_results
         }
         
-        self.scan_history.append(scan_summary)
-        
         print(f"\n📋 SCAN SUMMARY:")
-        print(f"   🎯 Tests run: {len(test_inputs)}")
+        print(f"   🎯 Tests run: {len(test_inputs)} ({len(security_prompts)} security, {len(normal_prompts)} normal)")
         print(f"   🚨 Anomalies detected: {anomaly_count}")
         print(f"   📊 Anomaly rate: {anomaly_rate:.1%}")
         print(f"   ⚠️  Overall risk: {overall_risk}")
+        
+        # Show enhanced statistical results
+        if enhanced_stats:
+            stat_val = enhanced_stats['statistical_validation']
+            if stat_val['overall_assessment']['statistically_significant']:
+                effect_size = stat_val['effect_size']['interpretation']
+                p_value = stat_val['statistical_tests']['independent_t_test']['p_value']
+                print(f"   📈 Statistically significant difference (p={p_value:.4f}, effect: {effect_size})")
+            else:
+                print(f"   📊 No statistically significant difference detected")
+        
+        self.scan_history.append(scan_summary)
         
         return scan_summary
     
@@ -318,7 +416,8 @@ def main():
     # Save results if requested
     if args.output:
         with open(args.output, 'w') as f:
-            json.dump(result, f, indent=2)
+            json_safe_result = make_json_serializable(result)
+            json.dump(json_safe_result, f, indent=2)
         print(f"💾 Results saved to {args.output}")
 
     # Exit with appropriate code

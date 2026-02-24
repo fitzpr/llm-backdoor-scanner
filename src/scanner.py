@@ -13,8 +13,8 @@ import logging
 from dataclasses import dataclass
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from .attention_monitor import AttentionMonitor
-from .visualization import AttentionVisualizer
+from src.attention_monitor import AttentionMonitor
+from src.visualization import AttentionVisualizer
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
