@@ -34,7 +34,9 @@ class WorkingBackdoorScanner:
             model_class = config.architectures[0] if config.architectures else ""
             
             # More specific model type detection with size awareness
-            if 'gpt2-xl' in model_name.lower():
+            if 'llama' in model_name.lower() or 'llama2' in model_name.lower():
+                return 'llama'
+            elif 'gpt2-xl' in model_name.lower():
                 return 'gpt2-xl'
             elif 'gpt2-large' in model_name.lower():
                 return 'gpt2-large'
@@ -44,6 +46,8 @@ class WorkingBackdoorScanner:
                 return 'distilgpt2'
             elif 'gpt2' in model_name.lower():
                 return 'gpt2'
+            elif any(arch in model_class.lower() for arch in ['llama']):
+                return 'llama'
             elif any(arch in model_class.lower() for arch in ['gpt', 'causal']):
                 return 'gpt'
             elif 'distilbert' in model_class.lower():
@@ -54,7 +58,9 @@ class WorkingBackdoorScanner:
                 return 'unknown'
         except:
             # Fallback based on model name
-            if 'gpt2-xl' in model_name.lower():
+            if 'llama' in model_name.lower():
+                return 'llama'
+            elif 'gpt2-xl' in model_name.lower():
                 return 'gpt2-xl'
             elif 'gpt2-large' in model_name.lower():
                 return 'gpt2-large'
@@ -243,6 +249,7 @@ class WorkingBackdoorScanner:
                 'gpt2-large': ['gpt2-large'], 
                 'gpt2-xl': ['gpt2-xl'],
                 'gpt': ['gpt2'],
+                'llama': ['microsoft/DialoGPT-medium'],  # Use similar causal LM as baseline
                 'distilgpt2': ['distilgpt2'],
                 'distilbert': ['distilbert-base-uncased'], 
                 'bert': ['bert-base-uncased'],

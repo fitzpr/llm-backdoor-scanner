@@ -86,7 +86,9 @@ class ConsolidatedBackdoorScanner:
             # Use architecture-specific baseline
             def get_model_architecture(model_name: str) -> str:
                 """Determine model architecture with size awareness"""
-                if 'gpt2-xl' in model_name.lower():
+                if 'llama' in model_name.lower():
+                    return 'llama'
+                elif 'gpt2-xl' in model_name.lower():
                     return 'gpt2-xl'
                 elif 'gpt2-large' in model_name.lower():
                     return 'gpt2-large'
@@ -106,7 +108,9 @@ class ConsolidatedBackdoorScanner:
                         from transformers import AutoConfig
                         config = AutoConfig.from_pretrained(model_name)
                         model_class = config.architectures[0] if config.architectures else ""
-                        if 'gpt2-xl' in model_name.lower():
+                        if 'llama' in model_class.lower():
+                            return 'llama'
+                        elif 'gpt2-xl' in model_name.lower():
                             return 'gpt2-xl'
                         elif 'gpt2-large' in model_name.lower():
                             return 'gpt2-large'
@@ -132,6 +136,7 @@ class ConsolidatedBackdoorScanner:
                 'gpt2-large': ['gpt2-large'],
                 'gpt2-xl': ['gpt2-xl'],
                 'gpt': ['gpt2'],
+                'llama': ['microsoft/DialoGPT-medium'],  # Similar causal LM baseline
                 'distilgpt2': ['distilgpt2'],
                 'distilbert': ['distilbert-base-uncased'],
                 'bert': ['bert-base-uncased'],
