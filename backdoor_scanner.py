@@ -83,8 +83,66 @@ class ConsolidatedBackdoorScanner:
             
             scanner = simple_scanner.WorkingBackdoorScanner()
             
-            # Establish baseline first (using the same model as baseline for simplicity)
-            clean_models = ["distilbert-base-uncased"]
+            # Use architecture-specific baseline
+            def get_model_architecture(model_name: str) -> str:
+                """Determine model architecture with size awareness"""
+                if 'gpt2-xl' in model_name.lower():
+                    return 'gpt2-xl'
+                elif 'gpt2-large' in model_name.lower():
+                    return 'gpt2-large'
+                elif 'gpt2-medium' in model_name.lower():
+                    return 'gpt2-medium'
+                elif 'distilgpt2' in model_name.lower():
+                    return 'distilgpt2'
+                elif 'gpt2' in model_name.lower():
+                    return 'gpt2'
+                elif 'distilbert' in model_name.lower():
+                    return 'distilbert'
+                elif 'bert' in model_name.lower():
+                    return 'bert'
+                else:
+                    # Try to detect from config
+                    try:
+                        from transformers import AutoConfig
+                        config = AutoConfig.from_pretrained(model_name)
+                        model_class = config.architectures[0] if config.architectures else ""
+                        if 'gpt2-xl' in model_name.lower():
+                            return 'gpt2-xl'
+                        elif 'gpt2-large' in model_name.lower():
+                            return 'gpt2-large'
+                        elif 'gpt2-medium' in model_name.lower():
+                            return 'gpt2-medium'
+                        elif 'distilgpt2' in model_name.lower():
+                            return 'distilgpt2'
+                        elif any(arch in model_class.lower() for arch in ['gpt', 'causal']):
+                            return 'gpt'
+                        elif 'distilbert' in model_class.lower():
+                            return 'distilbert'
+                        elif 'bert' in model_class.lower():
+                            return 'bert'
+                    except:
+                        pass
+                    return 'unknown'
+            
+            # Choose appropriate baseline based on target model architecture
+            target_arch = get_model_architecture(model_name)
+            architecture_baselines = {
+                'gpt2': ['gpt2'],
+                'gpt2-medium': ['gpt2-medium'],
+                'gpt2-large': ['gpt2-large'],
+                'gpt2-xl': ['gpt2-xl'],
+                'gpt': ['gpt2'],
+                'distilgpt2': ['distilgpt2'],
+                'distilbert': ['distilbert-base-uncased'],
+                'bert': ['bert-base-uncased'],
+                'unknown': ['distilbert-base-uncased']  # Fallback
+            }
+            
+            clean_models = architecture_baselines.get(target_arch, ['distilbert-base-uncased'])
+            
+            if verbose:
+                print(f"   Using {target_arch} baseline: {clean_models[0]}")
+            
             baseline_success = scanner.establish_baseline(clean_models)
             
             if not baseline_success:
